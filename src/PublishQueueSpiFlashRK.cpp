@@ -19,6 +19,14 @@ PublishQueueSpiFlashRK::PublishQueueSpiFlashRK() {
 PublishQueueSpiFlashRK::~PublishQueueSpiFlashRK() {
 }
 
+PublishQueueSpiFlashRK &PublishQueueSpiFlashRK::withSpiFlash(SpiFlash *spiFlash, size_t addrStart, size_t addrEnd) {
+    this->spiFlash = spiFlash;
+    this->addrStart = addrStart;
+    this->addrEnd = addrEnd;
+    return *this;
+}
+
+
 bool PublishQueueSpiFlashRK::setup() {
     if (system_thread_get_state(nullptr) != spark::feature::ENABLED) {
         _log.error("SYSTEM_THREAD(ENABLED) is required");
@@ -41,7 +49,12 @@ bool PublishQueueSpiFlashRK::setup() {
 
     circBuffer = new CircularBufferSpiFlashRK(spiFlash, addrStart, addrEnd);
     
-    return circBuffer->load();
+    bool bResult = circBuffer->load();
+    if (!bResult) {
+        circBuffer->format();
+    }
+
+    return true;
 }
 
 void PublishQueueSpiFlashRK::loop() {
@@ -60,7 +73,7 @@ bool PublishQueueSpiFlashRK::publishCommon(const char *eventName, const char *da
 
     CircularBufferSpiFlashRK::DataBuffer dataBuffer;
 
-    size_t size = strlen(eventName) + strlen(data) + 20;
+    size_t size = strlen(eventName) + strlen(data) + 32;
     char *buf = (char *)dataBuffer.allocate(size);
 
     memset(buf, 0, size);
@@ -69,7 +82,8 @@ bool PublishQueueSpiFlashRK::publishCommon(const char *eventName, const char *da
     writer.beginObject();
     writer.name("n").value(eventName);
     writer.name("d").value(data);
-    writer.name("f").value((int)(uint8_t)flags);
+    writer.name("NO_ACK").value((flags.value() & NO_ACK.value()) != 0);
+    writer.name("WITH_ACK").value((flags.value() & WITH_ACK.value()) != 0);
     writer.endObject();
 
     dataBuffer.truncate(strlen(buf) + 1);
@@ -90,8 +104,35 @@ void PublishQueueSpiFlashRK::publishCompleteCallback(bool succeeded, const char 
 
 
 size_t PublishQueueSpiFlashRK::getNumEvents() {
-    
+    size_t numEvents = 0;
+
+    CircularBufferSpiFlashRK::UsageStats stats;
+    if (circBuffer->getUsageStats(stats)) {
+        numEvents = stats.recordCount;
+    }
+    return numEvents;
 }
+
+
+void PublishQueueSpiFlashRK::clearQueues() {
+    WITH_LOCK(*this) {
+        circBuffer->format();
+    }
+
+    _log.trace("clearQueues");
+}
+
+void PublishQueueSpiFlashRK::setPausePublishing(bool value) { 
+    pausePublishing = value; 
+
+    if (!value) {
+        // When resuming publishing, update the canSleep flag
+        if (getNumEvents() != 0) {
+            canSleep = false;
+        }
+    }
+}
+
 
 void PublishQueueSpiFlashRK::stateConnectWait() {
     canSleep = (pausePublishing || getNumEvents() == 0);
@@ -120,41 +161,51 @@ void PublishQueueSpiFlashRK::stateWait() {
         return;
     }
     
-    curFileNum = fileQueue.getFileFromQueue(false);
-    if (curFileNum) {
-        curEvent = readQueueFile(curFileNum);
-        if (!curEvent) {
-            // Probably a corrupted file, discard
-            _log.info("discarding corrupted file %d", curFileNum);
-            fileQueue.getFileFromQueue(true);
-            fileQueue.removeFileNum(curFileNum, false);
-        }
-    }
-    else {
-        if (!ramQueue.empty()) {
-            curEvent = ramQueue.front();
-            ramQueue.pop_front();
-        }
-        else {
-            curEvent = NULL;
-        }
-    }
-
-    if (curEvent) {
+    if (circBuffer->readData(curEvent)) {
         stateTime = millis();
         stateHandler = &PublishQueueSpiFlashRK::statePublishWait;
         publishComplete = false;
         publishSuccess = false;
         canSleep = false;
 
-        // This message is monitored by the automated test tool. If you edit this, change that too.
-        _log.trace("publishing %s event=%s data=%s", (curFileNum ? "file" : "ram"), curEvent->eventName, curEvent->eventData);
+        String eventName;
+        String eventData;
+        PublishFlags eventFlags;
 
-        if (BackgroundPublishRK::instance().publish(curEvent->eventName, curEvent->eventData, curEvent->flags, 
-            [this](bool succeeded, const char *eventName, const char *eventData, const void *context) {
-                publishCompleteCallback(succeeded, eventName, eventData);
-            })) {
-            // Successfully started publish
+        JSONValue outerObj = JSONValue::parseCopy(curEvent.c_str());
+
+        JSONObjectIterator iter(outerObj);
+        while(iter.next()) {
+            if (iter.name() == "n") {
+                eventName = iter.value().toString().data();
+            }
+            else
+            if (iter.name() == "d") {
+                eventData = iter.value().toString().data();
+            }
+            else
+            if (iter.name() == "NO_ACK" && iter.value().toBool()) {
+                eventFlags |= NO_ACK;
+            }
+            else
+            if (iter.name() == "WITH_ACK" && iter.value().toBool()) {
+                eventFlags |= WITH_ACK;
+            }
+        }
+        if (eventName.length()) {
+            // This message is monitored by the automated test tool. If you edit this, change that too.
+            _log.trace("publishing event=%s data=%s", eventName.c_str(), eventData.c_str());
+
+            if (BackgroundPublishRK::instance().publish(eventName, eventData, eventFlags, 
+                [this](bool succeeded, const char *eventName, const char *eventData, const void *context) {
+                    publishCompleteCallback(succeeded, eventName, eventData);
+                })) {
+                // Successfully started publish
+            }
+        }
+        else {
+            // No events, can sleep
+            canSleep = true;
         }
     }
     else {
@@ -169,45 +220,26 @@ void PublishQueueSpiFlashRK::statePublishWait() {
 
     if (publishSuccess) {
         // Remove from the queue
-        _log.trace("publish success %d", curFileNum);
+        _log.trace("publish success");
 
-        if (curFileNum) {
-            // Was from the file-based queue
-            int fileNum = fileQueue.getFileFromQueue(false);
-            if (fileNum == curFileNum) {
-                fileQueue.getFileFromQueue(true);
-                fileQueue.removeFileNum(fileNum, false);
-                _log.trace("removed file %d", fileNum);
-            }
-            curFileNum = 0;
-        }
-
-        delete curEvent;
-        curEvent = NULL;
+        circBuffer->markAsRead(curEvent);
         durationMs = waitBetweenPublish;
     }
     else {
         // Wait and retry
         // This message is monitored by the automated test tool. If you edit this, change that too.
-        _log.trace("publish failed %d", curFileNum);
+        _log.trace("publish failed");
         durationMs = waitAfterFailure;
-
-        if (curFileNum) {
-            // Was from the file-based queue
-            delete curEvent;
-            curEvent = NULL;
-        }
-        else {
-            // Was in the RAM-based queue, put back
-            WITH_LOCK(*this) {
-                ramQueue.push_front(curEvent);
-            }
-            // Then write the entire queue to files
-            _log.trace("writing to files after publish failure");
-            writeQueueToFiles();
-        }
     }
 
     stateHandler = &PublishQueueSpiFlashRK::stateWait;
     stateTime = millis();
 }
+
+
+void PublishQueueSpiFlashRK::systemEventHandler(system_event_t event, int param) {
+    if ((event == reset) || ((event == cloud_status) && (param == cloud_status_disconnecting))) {
+        _log.trace("reset or disconnect event");
+    }
+}
+
