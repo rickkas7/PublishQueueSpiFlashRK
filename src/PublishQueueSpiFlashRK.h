@@ -281,10 +281,10 @@ protected:
      */
     os_mutex_recursive_t mutex = 0;
 
-    SpiFlash *spiFlash = nullptr;
-    size_t addrStart = 0;
-    size_t addrEnd = 0;
-    CircularBufferSpiFlashRK *circBuffer = nullptr;
+    SpiFlash *spiFlash = nullptr; //!< SpiFlash object to interface with the flash chip 
+    size_t addrStart = 0; //!< Address to start in the chip, must be sector aligned
+    size_t addrEnd = 0; //!< Address to end in the chip (exclusive), must be sector aligned
+    CircularBufferSpiFlashRK *circBuffer = nullptr; //!< Object to manage the circular buffer
 
     unsigned long stateTime = 0; //!< millis() value when entering the state, used for stateWait
     unsigned long durationMs = 0; //!< how long to wait before publishing in milliseconds, used in stateWait
@@ -292,7 +292,7 @@ protected:
     bool publishSuccess = false; //!< true if the publish succeeded
     bool pausePublishing = false; //!< flag to pause publishing (used from automated test)
     bool canSleep = false; //!< returns true if this is a good time to go to sleep
-    CircularBufferSpiFlashRK::ReadInfo curEvent;
+    CircularBufferSpiFlashRK::ReadInfo curEvent; //!< Event that is currently being processed
 
     unsigned long waitAfterConnect = 2000; //!< time to wait after Particle.connected() before publishing
     unsigned long waitBetweenPublish = 1000; //!< how long to wait in milliseconds between publishes
