@@ -99,8 +99,7 @@ bool PublishQueueSpiFlashRK::publishCommon(const char *eventName, const char *da
         _log.error("event %s not queued", eventName);
     }
 
-    _log.print(buf);
-    _log.print("\n");
+    // _log.print(buf); _log.print("\n");
 
     return bResult;
 }
