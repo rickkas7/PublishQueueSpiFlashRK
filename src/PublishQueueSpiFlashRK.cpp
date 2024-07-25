@@ -51,10 +51,13 @@ bool PublishQueueSpiFlashRK::setup() {
     
     bool bResult = circBuffer->load();
     if (!bResult) {
-        circBuffer->format();
+        bResult = circBuffer->format();
+    }
+    if (!bResult) {
+        _log.error("circular buffer not initialized");
     }
 
-    return true;
+    return bResult;
 }
 
 void PublishQueueSpiFlashRK::loop() {
@@ -73,7 +76,7 @@ bool PublishQueueSpiFlashRK::publishCommon(const char *eventName, const char *da
 
     CircularBufferSpiFlashRK::DataBuffer dataBuffer;
 
-    size_t size = strlen(eventName) + strlen(data) + 32;
+    size_t size = strlen(eventName) + strlen(data) + 64;
     char *buf = (char *)dataBuffer.allocate(size);
 
     memset(buf, 0, size);
@@ -88,8 +91,18 @@ bool PublishQueueSpiFlashRK::publishCommon(const char *eventName, const char *da
 
     dataBuffer.truncate(strlen(buf) + 1);
 
+    bool bResult = circBuffer->writeData(dataBuffer);
+    if (bResult) {
+        _log.trace("event %s queued", eventName);
+    }
+    else {
+        _log.error("event %s not queued", eventName);
+    }
 
-    return false;
+    _log.print(buf);
+    _log.print("\n");
+
+    return bResult;
 }
 
 
@@ -162,6 +175,8 @@ void PublishQueueSpiFlashRK::stateWait() {
     }
     
     if (circBuffer->readData(curEvent)) {
+        _log.trace("got event from queue %s", curEvent.c_str());
+
         stateTime = millis();
         stateHandler = &PublishQueueSpiFlashRK::statePublishWait;
         publishComplete = false;
@@ -204,7 +219,14 @@ void PublishQueueSpiFlashRK::stateWait() {
             }
         }
         else {
-            // No events, can sleep
+            // Invalid event
+            _log.error("invalid event, no event name, discarding");
+            circBuffer->markAsRead(curEvent);
+
+            durationMs = waitAfterFailure;
+            stateHandler = &PublishQueueSpiFlashRK::stateWait;
+            stateTime = millis();
+
             canSleep = true;
         }
     }
