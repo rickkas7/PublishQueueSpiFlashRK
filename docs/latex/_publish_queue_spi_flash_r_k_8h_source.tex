@@ -1,0 +1,107 @@
+\doxysection{Publish\+Queue\+Spi\+Flash\+RK.\+h}
+\hypertarget{_publish_queue_spi_flash_r_k_8h_source}{}\label{_publish_queue_spi_flash_r_k_8h_source}\index{src/PublishQueueSpiFlashRK.h@{src/PublishQueueSpiFlashRK.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_PUBLISHQUEUESPIFLASHRK\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_PUBLISHQUEUESPIFLASHRK\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Particle.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}CircularBufferSpiFlashRK.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\ \{}
+\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\ \&\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{instance}}();}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\ \&\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ae2a23fcaed89654f9c9f17adfdddb4bd}{withSpiFlash}}(SpiFlash\ *\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a1da50a10a396fe0709ac9a1c8738b75c}{spiFlash}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aca5f3d43bdc8c8902ffe22a9de6f5f8a}{addrStart}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_af8e9a8704892e4943b1ac6f4f2515724}{addrEnd}});}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\ \&\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ae634e2686cc1bf177ae55ebc627ac592}{withPublishCompleteUserCallback}}(std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{bool}\ succeeded,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventData)>\ cb)\ \{\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ab0b6083e00cb7e2259f9867f72d01535}{publishCompleteUserCallback}}\ =\ cb;\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup}}();}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9}{loop}}();}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a5f5027d4b64d1bc21254fbaa0733e807}{publish}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventName,\ PublishFlags\ flags1,\ PublishFlags\ flags2\ =\ PublishFlags())\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a14dd0a57845fc7e06dd9f5209de05165}{publishCommon}}(eventName,\ \textcolor{stringliteral}{"{}"{}},\ 60,\ flags1,\ flags2);}
+\DoxyCodeLine{00091\ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_afbf26a1fb98784d638860667d6791801}{publish}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *data,\ PublishFlags\ flags1,\ PublishFlags\ flags2\ =\ PublishFlags())\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a14dd0a57845fc7e06dd9f5209de05165}{publishCommon}}(eventName,\ data,\ 60,\ flags1,\ flags2);}
+\DoxyCodeLine{00111\ \ \ \ \ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a48e685ec23821dab6063e50a00225e91}{publish}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *data,\ \textcolor{keywordtype}{int}\ ttl,\ PublishFlags\ flags1,\ PublishFlags\ flags2\ =\ PublishFlags())\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a14dd0a57845fc7e06dd9f5209de05165}{publishCommon}}(eventName,\ data,\ ttl,\ flags1,\ flags2);}
+\DoxyCodeLine{00135\ \ \ \ \ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a14dd0a57845fc7e06dd9f5209de05165}{publishCommon}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *data,\ \textcolor{keywordtype}{int}\ ttl,\ PublishFlags\ flags1,\ PublishFlags\ flags2\ =\ PublishFlags());}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a43bca2f5a96ff2ef760b9c963536767d}{clearQueues}}();}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a33c00cca104d10541f1d78d259013704}{setPausePublishing}}(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_abec8fdac401f23df1070de1b9ee7bcee}{getPausePublishing}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ae5d53af680731e85beec6c61b87418f8}{pausePublishing}};\ \};}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a887cab36de8ebb85b1240308598b747d}{getCanSleep}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aba138268498227a7912ca0a080d14c3a}{canSleep}};\ \};}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a06dce18015364d4eb0ffe38c9a43b514}{getNumEvents}}();}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aa07086fd99709b0540e0bf267a841f18}{lock}}()\ \{\ os\_mutex\_recursive\_lock(\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a0d16202be4f2089df5ad4b256824360b}{mutex}});\ \};}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a7dc639a58e593645dfa9403aa6cfbbc5}{tryLock}}()\ \{\ \textcolor{keywordflow}{return}\ os\_mutex\_recursive\_trylock(\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a0d16202be4f2089df5ad4b256824360b}{mutex}});\ \};}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a5f95e3ccf5a72e2f51169181df5abfd0}{unlock}}()\ \{\ os\_mutex\_recursive\_unlock(\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a0d16202be4f2089df5ad4b256824360b}{mutex}});\ \};}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00231\ \ \ \ \ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a5a927d51f0ac9914db905c82585a701a}{PublishQueueSpiFlashRK}}();}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ad1b0c3c812ba7373499463b5f043241b}{\string~PublishQueueSpiFlashRK}}();}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00241\ \ \ \ \ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a596a2486c5a87a5fabec9f06aa577e98}{PublishQueueSpiFlashRK}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00246\ \ \ \ \ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\&\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a2ddb90f3d1fb93999c8b7fbf1a11d8f4}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a5968e5eb7c4e7873a31a9974c717fb19}{publishCompleteCallback}}(\textcolor{keywordtype}{bool}\ succeeded,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventData);}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a159e5045592926df630f2b12f355565b}{stateConnectWait}}();}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a6922a70eaf3b09a1e193328ad88d08d6}{stateWait}}();}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a13fc6db6a92789acb01f9eac143ca6cb}{statePublishWait}}();}
+\DoxyCodeLine{00282\ \ \ \ \ os\_mutex\_recursive\_t\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a0d16202be4f2089df5ad4b256824360b}{mutex}}\ =\ 0;}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ SpiFlash\ *\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a1da50a10a396fe0709ac9a1c8738b75c}{spiFlash}}\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00285\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aca5f3d43bdc8c8902ffe22a9de6f5f8a}{addrStart}}\ =\ 0;\ }
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_af8e9a8704892e4943b1ac6f4f2515724}{addrEnd}}\ =\ 0;\ }
+\DoxyCodeLine{00287\ \ \ \ \ CircularBufferSpiFlashRK\ *\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a341306c38335d0d9a3aba1163cf3653f}{circBuffer}}\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_afc5b25824bca8a1611c6f761729dd46a}{stateTime}}\ =\ 0;\ }
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a2bf1cfde0316f3a2383c817f5e15bc82}{durationMs}}\ =\ 0;\ }
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ac4718b4637e353f7d172942417e8d780}{publishComplete}}\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a12bddb302e7098a07427db5134646318}{publishSuccess}}\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ae5d53af680731e85beec6c61b87418f8}{pausePublishing}}\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aba138268498227a7912ca0a080d14c3a}{canSleep}}\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{00295\ \ \ \ \ CircularBufferSpiFlashRK::ReadInfo\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a1fd4a7dd9ede7360fe3b6dea76d3219a}{curEvent}};\ }
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a3d041da8ea88d2ecd8134d2f5f04fe59}{waitAfterConnect}}\ =\ 2000;\ }
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a7bd19c97e21b6ec3d28778a401d07e7b}{waitBetweenPublish}}\ =\ 1000;\ }
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a9b1cf5063f3f7582bc6870b18add0d65}{waitAfterFailure}}\ =\ 30000;\ }
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ std::function<void(\textcolor{keywordtype}{bool}\ succeeded,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventData)>\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ab0b6083e00cb7e2259f9867f72d01535}{publishCompleteUserCallback}}\ =\ 0;\ }
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \ \ \ \ std::function<void(\mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\&)>\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a433a99ad98242cff1425efdb51634946}{stateHandler}}\ =\ 0;\ }
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a39d928073232f6bf5be2d3d24c5b953c}{systemEventHandler}}(system\_event\_t\ event,\ \textcolor{keywordtype}{int}\ param);\ }
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{PublishQueueSpiFlashRK}}\ *\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aa1882834270be9a7d25f4524618dc6ea}{\_instance}};}
+\DoxyCodeLine{00314\ }
+\DoxyCodeLine{00315\ \};}
+\DoxyCodeLine{00316\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{/*\ \_\_PUBLISHQUEUESPIFLASHRK\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

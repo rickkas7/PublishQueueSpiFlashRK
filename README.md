@@ -93,3 +93,17 @@ PublishQueueSpiFlashRK::instance().publish("testEvent", buf, WITH_ACK);
 
 You can call this whether online or offline, and the event will be queued for sending later.
 It does not block, other than if the SPI flash is currently in use.
+
+## Additional resources
+
+- [CircularBufferSpiFlashRK](https://github.com/rickkas7/CircularBufferSpiFlashRK) - the library that manages the circular buffer on the flash chip
+- [SpiFlashRK](https://github.com/rickkas7/SpiFlashRK)] - the library that manages the SPI flash chip
+- [BackgroundPublishRK](https://github.com/rickkas7/BackgroundPublishRK) - class for publishing in the background
+- [PublishQueuePosixRK](https://github.com/rickkas7/PublishQueuePosixRK) - alternative to this library that stores events on the built-in flash file system on Particle Gen 3 and Gen 4 devices.
+
+
+## Version history
+
+### 0.0.1 (2024-07-26)
+
+Initial version.
