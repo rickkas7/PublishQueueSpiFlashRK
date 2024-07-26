@@ -1,0 +1,110 @@
+\chapter{Publish\+Queue\+Spi\+Flash\+RK}
+\hypertarget{index}{}\label{index}\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\label{index_md__r_e_a_d_m_e}%
+\Hypertarget{index_md__r_e_a_d_m_e}%
+ {\itshape Particle offline event queue storage on external SPI flash chips}
+
+{\bfseries{Typical uses case\+:}} When you have a large number of events you want to store offline and you have an external SPI NOR flash chip available in your design.
+
+This library is designed to hold a circular buffer of events in a FIFO queue stored in SPI NOR flash memory. It can only be used with external SPI flash chips; it cannot be used with the built-\/in SPI flash on Particle Gen 3 and Gen 4 devices. It cannot be used with SD cards.
+
+The main advantage of this library is that it does not require a file system, like Little\+FS or SPIFFS. It takes advantage of the natural circularity of the buffer to wear level across all sectors. It works up to the maximum event size and can pack multiple events into a single sector for efficiency.
+
+It also is highly reliable\+: All events are written to flash before attempting to send, so if the device is reset the events will be safely stored. The format of the flash is designed to be resilient in the case of unexpected resets, even while writing.
+
+It limited to 16-\/bit sector numbers within the circular buffer, so the maximum size circular buffer is 256 Mbyte but the chip can be larger than that.
+
+\doxysection*{SPI flash}
+
+It works with SPI flash chips that are compatible with \href{https://github.com/rickkas7/SpiFlashRK}{\texttt{ Spi\+Flash\+RK}} including most from Winbond, Macronix, and ISSI. It supports all sizes of devices, including those that require 4-\/byte addressing (larger than 16 Mbyte). It requires 4096 byte sectors, however.
+
+It can use any portion, divided at a sector boundary, or the entire chip.
+
+A chip can contain multiple separate buffers if desired by instantiating multiple Circular\+Buffer Spi\+Flash\+RK objects sharing a single Spi\+Flash object. You can also use other portions of the flash for other purposes as long as the other uses properly lock the SPI bus or access it using the shared Spi\+Flash object.
+
+It can also be used with most other vendors of SPI NOR flash chip by creating an adapter subclass, which can be done from your code without modifying Sp\+IFlash\+RK. Note that it cannot be used with NAND flash chips that are commonly used with SD cards.
+
+\doxysection*{Example}
+
+See the example 1-\/simple for using this library.
+
+\doxysubsection*{Create a Spi\+Flash object for your chip}
+
+You will typically create a global object for your SPI flash chip by using one of the following lines, possibly with a different CS pin\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Pick\ a\ chip,\ port,\ and\ CS\ line}}
+\DoxyCodeLine{\textcolor{comment}{//\ SpiFlashISSI\ spiFlash(SPI,\ A2);}}
+\DoxyCodeLine{\textcolor{comment}{//\ SpiFlashWinbond\ spiFlash(SPI,\ A4);}}
+\DoxyCodeLine{SpiFlashMacronix\ spiFlash(SPI,\ A4);}
+\DoxyCodeLine{\textcolor{comment}{//\ SpiFlashWinbond\ spiFlash(SPI1,\ D5);}}
+
+\end{DoxyCode}
+
+
+\doxysubsection*{setup}
+
+From setup, you need to call {\ttfamily spi\+Flash.\+begin()} and initialize the {\ttfamily Publish\+Queue\+Spi\+Flash} object\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{spiFlash.begin();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{PublishQueueSpiFlashRK::instance}}()}
+\DoxyCodeLine{\ \ \ \ .\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ae2a23fcaed89654f9c9f17adfdddb4bd}{withSpiFlash}}(\&spiFlash,\ 0,\ 100\ *\ 4096)}
+\DoxyCodeLine{\ \ \ \ .\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup}}();}
+
+\end{DoxyCode}
+
+
+Note the {\ttfamily with\+Spi\+Flash} call; you use this to specify the {\ttfamily Spi\+Flash} object for your chip, and also the start and end addresses to use for your chip. The parameters are\+:
+
+
+\begin{DoxyItemize}
+\item spi\+Flash The Spi\+Flash\+RK object for the SPI NOR flash chip.
+\item addr\+Start Address to start at (typically 0). Must be sector aligned (multiple of 4096 bytes).
+\item addr\+End Address to end at (not inclusive). Must be sector aligned (multiple of 4096 bytes).
+\end{DoxyItemize}
+
+\doxysubsection*{loop}
+
+From loop(), make sure you call this, or publishing will not occur\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{PublishQueueSpiFlashRK::instance}}().\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9}{loop}}();}
+
+\end{DoxyCode}
+
+
+While the actual publish occurs in its own thread, the processing of the queue only occurs from the loop thread when this is called.
+
+\doxysubsection*{publish}
+
+Instead of using {\ttfamily Particle.\+publish()} you use code that looks like this\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{PublishQueueSpiFlashRK::instance}}().\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a5f5027d4b64d1bc21254fbaa0733e807}{publish}}(\textcolor{stringliteral}{"{}testEvent"{}},\ buf,\ WITH\_ACK);}
+
+\end{DoxyCode}
+
+
+You can call this whether online or offline, and the event will be queued for sending later. It does not block, other than if the SPI flash is currently in use.
+
+\doxysection*{Additional resources}
+
+
+\begin{DoxyItemize}
+\item \href{https://github.com/rickkas7/CircularBufferSpiFlashRK}{\texttt{ Circular\+Buffer\+Spi\+Flash\+RK}} -\/ the library that manages the circular buffer on the flash chip
+\item \href{https://github.com/rickkas7/SpiFlashRK}{\texttt{ Spi\+Flash\+RK}}\mbox{]} -\/ the library that manages the SPI flash chip
+\item \href{https://github.com/rickkas7/BackgroundPublishRK}{\texttt{ Background\+Publish\+RK}} -\/ class for publishing in the background
+\item \href{https://github.com/rickkas7/PublishQueuePosixRK}{\texttt{ Publish\+Queue\+Posix\+RK}} -\/ alternative to this library that stores events on the built-\/in flash file system on Particle Gen 3 and Gen 4 devices.
+\end{DoxyItemize}
+
+\doxysection*{Version history}
+
+\doxysubsection*{0.\+0.\+1 (2024-\/07-\/26)}
+
+Initial version. 

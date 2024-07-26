@@ -1,0 +1,471 @@
+\doxysection{Publish\+Queue\+Spi\+Flash\+RK Class Reference}
+\hypertarget{class_publish_queue_spi_flash_r_k}{}\label{class_publish_queue_spi_flash_r_k}\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+
+
+{\ttfamily \#include $<$Publish\+Queue\+Spi\+Flash\+RK.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \& \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ae2a23fcaed89654f9c9f17adfdddb4bd}{with\+Spi\+Flash}} (Spi\+Flash \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a1da50a10a396fe0709ac9a1c8738b75c}{spi\+Flash}}, size\+\_\+t \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aca5f3d43bdc8c8902ffe22a9de6f5f8a}{addr\+Start}}, size\+\_\+t \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_af8e9a8704892e4943b1ac6f4f2515724}{addr\+End}})
+\item 
+\mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \& \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_ae634e2686cc1bf177ae55ebc627ac592}{with\+Publish\+Complete\+User\+Callback}} (std\+::function$<$ void(bool succeeded, const char \texorpdfstring{$\ast$}{*}event\+Name, const char \texorpdfstring{$\ast$}{*}event\+Data)$>$ cb)
+\begin{DoxyCompactList}\small\item\em Adds a callback function to call with publish is complete. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Perform setup operations; call this from global application \doxylink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup()} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Perform application loop operations; call this from global application \doxylink{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9}{loop()} \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a5f5027d4b64d1bc21254fbaa0733e807}{publish}} (const char \texorpdfstring{$\ast$}{*}event\+Name, Publish\+Flags flags1, Publish\+Flags flags2=Publish\+Flags())
+\begin{DoxyCompactList}\small\item\em Overload for publishing an event. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_afbf26a1fb98784d638860667d6791801}{publish}} (const char \texorpdfstring{$\ast$}{*}event\+Name, const char \texorpdfstring{$\ast$}{*}data, Publish\+Flags flags1, Publish\+Flags flags2=Publish\+Flags())
+\begin{DoxyCompactList}\small\item\em Overload for publishing an event. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a48e685ec23821dab6063e50a00225e91}{publish}} (const char \texorpdfstring{$\ast$}{*}event\+Name, const char \texorpdfstring{$\ast$}{*}data, int ttl, Publish\+Flags flags1, Publish\+Flags flags2=Publish\+Flags())
+\begin{DoxyCompactList}\small\item\em Overload for publishing an event. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a14dd0a57845fc7e06dd9f5209de05165}{publish\+Common}} (const char \texorpdfstring{$\ast$}{*}event\+Name, const char \texorpdfstring{$\ast$}{*}data, int ttl, Publish\+Flags flags1, Publish\+Flags flags2=Publish\+Flags())
+\begin{DoxyCompactList}\small\item\em Common publish function. All other overloads lead here. This is a pure virtual function, implemented in subclasses. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a43bca2f5a96ff2ef760b9c963536767d}\label{class_publish_queue_spi_flash_r_k_a43bca2f5a96ff2ef760b9c963536767d} 
+void {\bfseries clear\+Queues} ()
+\begin{DoxyCompactList}\small\item\em Empty both the RAM and file based queues. Any queued events are discarded. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a33c00cca104d10541f1d78d259013704}{set\+Pause\+Publishing}} (bool value)
+\begin{DoxyCompactList}\small\item\em Pause or resume publishing events. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_abec8fdac401f23df1070de1b9ee7bcee}\label{class_publish_queue_spi_flash_r_k_abec8fdac401f23df1070de1b9ee7bcee} 
+bool {\bfseries get\+Pause\+Publishing} () const
+\begin{DoxyCompactList}\small\item\em Gets the state of the pause publishing flag. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a887cab36de8ebb85b1240308598b747d}{get\+Can\+Sleep}} () const
+\begin{DoxyCompactList}\small\item\em Determine if it\textquotesingle{}s a good time to go to sleep. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a06dce18015364d4eb0ffe38c9a43b514}{get\+Num\+Events}} ()
+\begin{DoxyCompactList}\small\item\em Gets the total number of events queued. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aa07086fd99709b0540e0bf267a841f18}{lock}} ()
+\begin{DoxyCompactList}\small\item\em Locks the mutex that protects shared resources. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a7dc639a58e593645dfa9403aa6cfbbc5}{try\+Lock}} ()
+\begin{DoxyCompactList}\small\item\em Attempts to lock the mutex that protects shared resources. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a5f95e3ccf5a72e2f51169181df5abfd0}\label{class_publish_queue_spi_flash_r_k_a5f95e3ccf5a72e2f51169181df5abfd0} 
+void {\bfseries unlock} ()
+\begin{DoxyCompactList}\small\item\em Unlocks the mutex that protects shared resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \& \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{instance}} ()
+\begin{DoxyCompactList}\small\item\em Gets the singleton instance of this class, allocating it if necessary. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a5a927d51f0ac9914db905c82585a701a}{Publish\+Queue\+Spi\+Flash\+RK}} ()
+\begin{DoxyCompactList}\small\item\em The constructor is protected because the class is a singleton. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_ad1b0c3c812ba7373499463b5f043241b}\label{class_publish_queue_spi_flash_r_k_ad1b0c3c812ba7373499463b5f043241b} 
+virtual {\bfseries \texorpdfstring{$\sim$}{\string~}\+Publish\+Queue\+Spi\+Flash\+RK} ()
+\begin{DoxyCompactList}\small\item\em The destructor is protected because the class is a singleton and cannot be deleted. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a596a2486c5a87a5fabec9f06aa577e98}{Publish\+Queue\+Spi\+Flash\+RK}} (const \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \&)=delete
+\item 
+\mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \& \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a2ddb90f3d1fb93999c8b7fbf1a11d8f4}{operator=}} (const \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \&)=delete
+\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a5968e5eb7c4e7873a31a9974c717fb19}\label{class_publish_queue_spi_flash_r_k_a5968e5eb7c4e7873a31a9974c717fb19} 
+void {\bfseries publish\+Complete\+Callback} (bool succeeded, const char \texorpdfstring{$\ast$}{*}event\+Name, const char \texorpdfstring{$\ast$}{*}event\+Data)
+\begin{DoxyCompactList}\small\item\em Callback for Background\+Publish\+RK library. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a159e5045592926df630f2b12f355565b}{state\+Connect\+Wait}} ()
+\begin{DoxyCompactList}\small\item\em State handler for waiting to connect to the Particle cloud. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a6922a70eaf3b09a1e193328ad88d08d6}{state\+Wait}} ()
+\begin{DoxyCompactList}\small\item\em State handler for waiting to publish. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a13fc6db6a92789acb01f9eac143ca6cb}{state\+Publish\+Wait}} ()
+\begin{DoxyCompactList}\small\item\em State handler for waiting for publish to complete. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a39d928073232f6bf5be2d3d24c5b953c}\label{class_publish_queue_spi_flash_r_k_a39d928073232f6bf5be2d3d24c5b953c} 
+static void {\bfseries system\+Event\+Handler} (system\+\_\+event\+\_\+t event, int param)
+\begin{DoxyCompactList}\small\item\em system event handler, used to detect reset events \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+os\+\_\+mutex\+\_\+recursive\+\_\+t \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_a0d16202be4f2089df5ad4b256824360b}{mutex}} = 0
+\begin{DoxyCompactList}\small\item\em Mutex to protect shared resources. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a1da50a10a396fe0709ac9a1c8738b75c}\label{class_publish_queue_spi_flash_r_k_a1da50a10a396fe0709ac9a1c8738b75c} 
+Spi\+Flash \texorpdfstring{$\ast$}{*} {\bfseries spi\+Flash} = nullptr
+\begin{DoxyCompactList}\small\item\em Spi\+Flash object to interface with the flash chip. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_aca5f3d43bdc8c8902ffe22a9de6f5f8a}\label{class_publish_queue_spi_flash_r_k_aca5f3d43bdc8c8902ffe22a9de6f5f8a} 
+size\+\_\+t {\bfseries addr\+Start} = 0
+\begin{DoxyCompactList}\small\item\em Address to start in the chip, must be sector aligned. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_af8e9a8704892e4943b1ac6f4f2515724}\label{class_publish_queue_spi_flash_r_k_af8e9a8704892e4943b1ac6f4f2515724} 
+size\+\_\+t {\bfseries addr\+End} = 0
+\begin{DoxyCompactList}\small\item\em Address to end in the chip (exclusive), must be sector aligned. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a341306c38335d0d9a3aba1163cf3653f}\label{class_publish_queue_spi_flash_r_k_a341306c38335d0d9a3aba1163cf3653f} 
+Circular\+Buffer\+Spi\+Flash\+RK \texorpdfstring{$\ast$}{*} {\bfseries circ\+Buffer} = nullptr
+\begin{DoxyCompactList}\small\item\em Object to manage the circular buffer. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_afc5b25824bca8a1611c6f761729dd46a}\label{class_publish_queue_spi_flash_r_k_afc5b25824bca8a1611c6f761729dd46a} 
+unsigned long {\bfseries state\+Time} = 0
+\begin{DoxyCompactList}\small\item\em millis() value when entering the state, used for state\+Wait \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a2bf1cfde0316f3a2383c817f5e15bc82}\label{class_publish_queue_spi_flash_r_k_a2bf1cfde0316f3a2383c817f5e15bc82} 
+unsigned long {\bfseries duration\+Ms} = 0
+\begin{DoxyCompactList}\small\item\em how long to wait before publishing in milliseconds, used in state\+Wait \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_ac4718b4637e353f7d172942417e8d780}\label{class_publish_queue_spi_flash_r_k_ac4718b4637e353f7d172942417e8d780} 
+bool {\bfseries publish\+Complete} = false
+\begin{DoxyCompactList}\small\item\em true if the publish has completed (successfully or not) \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a12bddb302e7098a07427db5134646318}\label{class_publish_queue_spi_flash_r_k_a12bddb302e7098a07427db5134646318} 
+bool {\bfseries publish\+Success} = false
+\begin{DoxyCompactList}\small\item\em true if the publish succeeded \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_ae5d53af680731e85beec6c61b87418f8}\label{class_publish_queue_spi_flash_r_k_ae5d53af680731e85beec6c61b87418f8} 
+bool {\bfseries pause\+Publishing} = false
+\begin{DoxyCompactList}\small\item\em flag to pause publishing (used from automated test) \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_aba138268498227a7912ca0a080d14c3a}\label{class_publish_queue_spi_flash_r_k_aba138268498227a7912ca0a080d14c3a} 
+bool {\bfseries can\+Sleep} = false
+\begin{DoxyCompactList}\small\item\em returns true if this is a good time to go to sleep \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a1fd4a7dd9ede7360fe3b6dea76d3219a}\label{class_publish_queue_spi_flash_r_k_a1fd4a7dd9ede7360fe3b6dea76d3219a} 
+Circular\+Buffer\+Spi\+Flash\+RK\+::\+Read\+Info {\bfseries cur\+Event}
+\begin{DoxyCompactList}\small\item\em Event that is currently being processed. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a3d041da8ea88d2ecd8134d2f5f04fe59}\label{class_publish_queue_spi_flash_r_k_a3d041da8ea88d2ecd8134d2f5f04fe59} 
+unsigned long {\bfseries wait\+After\+Connect} = 2000
+\begin{DoxyCompactList}\small\item\em time to wait after Particle.\+connected() before publishing \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a7bd19c97e21b6ec3d28778a401d07e7b}\label{class_publish_queue_spi_flash_r_k_a7bd19c97e21b6ec3d28778a401d07e7b} 
+unsigned long {\bfseries wait\+Between\+Publish} = 1000
+\begin{DoxyCompactList}\small\item\em how long to wait in milliseconds between publishes \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a9b1cf5063f3f7582bc6870b18add0d65}\label{class_publish_queue_spi_flash_r_k_a9b1cf5063f3f7582bc6870b18add0d65} 
+unsigned long {\bfseries wait\+After\+Failure} = 30000
+\begin{DoxyCompactList}\small\item\em how long to wait after failing to publish before trying again \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_ab0b6083e00cb7e2259f9867f72d01535}\label{class_publish_queue_spi_flash_r_k_ab0b6083e00cb7e2259f9867f72d01535} 
+std\+::function$<$ void(bool succeeded, const char \texorpdfstring{$\ast$}{*}event\+Name, const char \texorpdfstring{$\ast$}{*}event\+Data) {\bfseries publish\+Complete\+User\+Callback} ) = 0
+\begin{DoxyCompactList}\small\item\em User callback for publish complete. \end{DoxyCompactList}\item 
+\Hypertarget{class_publish_queue_spi_flash_r_k_a433a99ad98242cff1425efdb51634946}\label{class_publish_queue_spi_flash_r_k_a433a99ad98242cff1425efdb51634946} 
+std\+::function$<$ void(\mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \&) {\bfseries state\+Handler} ) = 0
+\begin{DoxyCompactList}\small\item\em state handler (state\+Connect\+Wait, state\+Wait, etc). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_publish_queue_spi_flash_r_k_aa1882834270be9a7d25f4524618dc6ea}{\+\_\+instance}}
+\begin{DoxyCompactList}\small\item\em Singleton instance of this class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class is a singleton; you do not create one as a global, on the stack, or with new.
+
+From global application setup you must call\+: \doxylink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{Publish\+Queue\+Spi\+Flash\+RK\+::instance()}.\doxylink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup()};
+
+From global application loop you must call\+: \doxylink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{Publish\+Queue\+Spi\+Flash\+RK\+::instance()}.\doxylink{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9}{loop()}; 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_publish_queue_spi_flash_r_k_a5a927d51f0ac9914db905c82585a701a}\label{class_publish_queue_spi_flash_r_k_a5a927d51f0ac9914db905c82585a701a} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{PublishQueueSpiFlashRK()}{PublishQueueSpiFlashRK()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Publish\+Queue\+Spi\+Flash\+RK\+::\+Publish\+Queue\+Spi\+Flash\+RK (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The constructor is protected because the class is a singleton. 
+
+Use \doxylink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{Publish\+Queue\+Spi\+Flash\+RK\+::instance()} to instantiate the singleton. \Hypertarget{class_publish_queue_spi_flash_r_k_a596a2486c5a87a5fabec9f06aa577e98}\label{class_publish_queue_spi_flash_r_k_a596a2486c5a87a5fabec9f06aa577e98} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{PublishQueueSpiFlashRK()}{PublishQueueSpiFlashRK()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Publish\+Queue\+Spi\+Flash\+RK\+::\+Publish\+Queue\+Spi\+Flash\+RK (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [delete]}}
+
+This class is a singleton and cannot be copied 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_publish_queue_spi_flash_r_k_a887cab36de8ebb85b1240308598b747d}\label{class_publish_queue_spi_flash_r_k_a887cab36de8ebb85b1240308598b747d} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!getCanSleep@{getCanSleep}}
+\index{getCanSleep@{getCanSleep}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{getCanSleep()}{getCanSleep()}}
+{\footnotesize\ttfamily bool Publish\+Queue\+Spi\+Flash\+RK\+::get\+Can\+Sleep (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Determine if it\textquotesingle{}s a good time to go to sleep. 
+
+If a publish is not in progress and the queue is empty, returns true.
+
+If pause\+Publishing is true, then return true if either the current publish has completed, or not cloud connected. \Hypertarget{class_publish_queue_spi_flash_r_k_a06dce18015364d4eb0ffe38c9a43b514}\label{class_publish_queue_spi_flash_r_k_a06dce18015364d4eb0ffe38c9a43b514} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!getNumEvents@{getNumEvents}}
+\index{getNumEvents@{getNumEvents}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{getNumEvents()}{getNumEvents()}}
+{\footnotesize\ttfamily size\+\_\+t Publish\+Queue\+Spi\+Flash\+RK\+::get\+Num\+Events (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the total number of events queued. 
+
+This is the number of events in the RAM-\/based queue and the file-\/based queue. This operation is fast; the file queue length is stored in RAM, so this command does not need to access the file system.
+
+If an event is currently being sent, the result includes this event. \Hypertarget{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}\label{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!instance@{instance}}
+\index{instance@{instance}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \& Publish\+Queue\+Spi\+Flash\+RK\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the singleton instance of this class, allocating it if necessary. 
+
+Use \doxylink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{Publish\+Queue\+Spi\+Flash\+RK\+::instance()} to instantiate the singleton. \Hypertarget{class_publish_queue_spi_flash_r_k_aa07086fd99709b0540e0bf267a841f18}\label{class_publish_queue_spi_flash_r_k_aa07086fd99709b0540e0bf267a841f18} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!lock@{lock}}
+\index{lock@{lock}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{lock()}{lock()}}
+{\footnotesize\ttfamily void Publish\+Queue\+Spi\+Flash\+RK\+::lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Locks the mutex that protects shared resources. 
+
+This is compatible with {\ttfamily WITH\+\_\+\+LOCK(\texorpdfstring{$\ast$}{*}this)}.
+
+The mutex is not recursive so do not lock it within a locked section. \Hypertarget{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9}\label{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!loop@{loop}}
+\index{loop@{loop}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void Publish\+Queue\+Spi\+Flash\+RK\+::loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Perform application loop operations; call this from global application \doxylink{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9}{loop()} 
+
+You typically use \doxylink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{Publish\+Queue\+Spi\+Flash\+RK\+::instance()}.\doxylink{class_publish_queue_spi_flash_r_k_a185eb2c005cd2cd0c05580637a2a61e9}{loop()}; \Hypertarget{class_publish_queue_spi_flash_r_k_a2ddb90f3d1fb93999c8b7fbf1a11d8f4}\label{class_publish_queue_spi_flash_r_k_a2ddb90f3d1fb93999c8b7fbf1a11d8f4} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!operator=@{operator=}}
+\index{operator=@{operator=}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \& Publish\+Queue\+Spi\+Flash\+RK\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [delete]}}
+
+This class is a singleton and cannot be copied \Hypertarget{class_publish_queue_spi_flash_r_k_a48e685ec23821dab6063e50a00225e91}\label{class_publish_queue_spi_flash_r_k_a48e685ec23821dab6063e50a00225e91} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!publish@{publish}}
+\index{publish@{publish}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{publish()}{publish()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily bool Publish\+Queue\+Spi\+Flash\+RK\+::publish (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{event\+Name,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{ttl,  }\item[{Publish\+Flags}]{flags1,  }\item[{Publish\+Flags}]{flags2 = {\ttfamily PublishFlags()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Overload for publishing an event. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+Name} & The name of the event (63 character maximum).\\
+\hline
+{\em data} & The event data (255 bytes maximum, 622 bytes in system firmware 0.\+8.\+0-\/rc.\+4 and later).\\
+\hline
+{\em ttl} & The time-\/to-\/live value. If not specified in one of the other overloads, the value 60 is used. However, the ttl is ignored by the cloud, so it doesn\textquotesingle{}t matter what you set it to. Essentially all events are discarded immediately if not subscribed to so they essentially have a ttl of 0.\\
+\hline
+{\em flags1} & Normally PRIVATE. You can also use PUBLIC, but one or the other must be specified.\\
+\hline
+{\em flags2} & (optional) You can use NO\+\_\+\+ACK or WITH\+\_\+\+ACK if desired.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the event was queued or false if it was not.
+\end{DoxyReturn}
+This function almost always returns true. If you queue more events than fit in the buffer the oldest (sometimes second oldest) is discarded. \Hypertarget{class_publish_queue_spi_flash_r_k_afbf26a1fb98784d638860667d6791801}\label{class_publish_queue_spi_flash_r_k_afbf26a1fb98784d638860667d6791801} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!publish@{publish}}
+\index{publish@{publish}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{publish()}{publish()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily bool Publish\+Queue\+Spi\+Flash\+RK\+::publish (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{event\+Name,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{Publish\+Flags}]{flags1,  }\item[{Publish\+Flags}]{flags2 = {\ttfamily PublishFlags()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Overload for publishing an event. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+Name} & The name of the event (63 character maximum).\\
+\hline
+{\em data} & The event data (255 bytes maximum, 622 bytes in system firmware 0.\+8.\+0-\/rc.\+4 and later).\\
+\hline
+{\em flags1} & Normally PRIVATE. You can also use PUBLIC, but one or the other must be specified.\\
+\hline
+{\em flags2} & (optional) You can use NO\+\_\+\+ACK or WITH\+\_\+\+ACK if desired.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the event was queued or false if it was not.
+\end{DoxyReturn}
+This function almost always returns true. If you queue more events than fit in the buffer the oldest (sometimes second oldest) is discarded. \Hypertarget{class_publish_queue_spi_flash_r_k_a5f5027d4b64d1bc21254fbaa0733e807}\label{class_publish_queue_spi_flash_r_k_a5f5027d4b64d1bc21254fbaa0733e807} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!publish@{publish}}
+\index{publish@{publish}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{publish()}{publish()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily bool Publish\+Queue\+Spi\+Flash\+RK\+::publish (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{event\+Name,  }\item[{Publish\+Flags}]{flags1,  }\item[{Publish\+Flags}]{flags2 = {\ttfamily PublishFlags()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Overload for publishing an event. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+Name} & The name of the event (63 character maximum).\\
+\hline
+{\em flags1} & Normally PRIVATE. You can also use PUBLIC, but one or the other must be specified.\\
+\hline
+{\em flags2} & (optional) You can use NO\+\_\+\+ACK or WITH\+\_\+\+ACK if desired.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the event was queued or false if it was not.
+\end{DoxyReturn}
+This function almost always returns true. If you queue more events than fit in the buffer the oldest (sometimes second oldest) is discarded. \Hypertarget{class_publish_queue_spi_flash_r_k_a14dd0a57845fc7e06dd9f5209de05165}\label{class_publish_queue_spi_flash_r_k_a14dd0a57845fc7e06dd9f5209de05165} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!publishCommon@{publishCommon}}
+\index{publishCommon@{publishCommon}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{publishCommon()}{publishCommon()}}
+{\footnotesize\ttfamily bool Publish\+Queue\+Spi\+Flash\+RK\+::publish\+Common (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{event\+Name,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{ttl,  }\item[{Publish\+Flags}]{flags1,  }\item[{Publish\+Flags}]{flags2 = {\ttfamily PublishFlags()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Common publish function. All other overloads lead here. This is a pure virtual function, implemented in subclasses. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+Name} & The name of the event (63 character maximum).\\
+\hline
+{\em data} & The event data (255 bytes maximum, 622 bytes in system firmware 0.\+8.\+0-\/rc.\+4 and later).\\
+\hline
+{\em ttl} & The time-\/to-\/live value. If not specified in one of the other overloads, the value 60 is used. However, the ttl is ignored by the cloud, so it doesn\textquotesingle{}t matter what you set it to. Essentially all events are discarded immediately if not subscribed to so they essentially have a ttl of 0.\\
+\hline
+{\em flags1} & Normally PRIVATE. You can also use PUBLIC, but one or the other must be specified.\\
+\hline
+{\em flags2} & (optional) You can use NO\+\_\+\+ACK or WITH\+\_\+\+ACK if desired.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the event was queued or false if it was not.
+\end{DoxyReturn}
+This function almost always returns true. If you queue more events than fit in the buffer the oldest (sometimes second oldest) is discarded. \Hypertarget{class_publish_queue_spi_flash_r_k_a33c00cca104d10541f1d78d259013704}\label{class_publish_queue_spi_flash_r_k_a33c00cca104d10541f1d78d259013704} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!setPausePublishing@{setPausePublishing}}
+\index{setPausePublishing@{setPausePublishing}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{setPausePublishing()}{setPausePublishing()}}
+{\footnotesize\ttfamily void Publish\+Queue\+Spi\+Flash\+RK\+::set\+Pause\+Publishing (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})}
+
+
+
+Pause or resume publishing events. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to set, true = pause, false = normal operation\\
+\hline
+\end{DoxyParams}
+If called while a publish is in progress, that publish will still proceed, but the next event (if any) will not be attempted.
+
+This is used by the automated test tool; you probably won\textquotesingle{}t need to manually manage this under normal circumstances. \Hypertarget{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}\label{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!setup@{setup}}
+\index{setup@{setup}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily bool Publish\+Queue\+Spi\+Flash\+RK\+::setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Perform setup operations; call this from global application \doxylink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup()} 
+
+You typically use \doxylink{class_publish_queue_spi_flash_r_k_a70499fc10fbb59a9522fc6e763d7cbfc}{Publish\+Queue\+Spi\+Flash\+RK\+::instance()}.\doxylink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup()}; \Hypertarget{class_publish_queue_spi_flash_r_k_a159e5045592926df630f2b12f355565b}\label{class_publish_queue_spi_flash_r_k_a159e5045592926df630f2b12f355565b} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!stateConnectWait@{stateConnectWait}}
+\index{stateConnectWait@{stateConnectWait}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{stateConnectWait()}{stateConnectWait()}}
+{\footnotesize\ttfamily void Publish\+Queue\+Spi\+Flash\+RK\+::state\+Connect\+Wait (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+State handler for waiting to connect to the Particle cloud. 
+
+Next state\+: state\+Wait \Hypertarget{class_publish_queue_spi_flash_r_k_a13fc6db6a92789acb01f9eac143ca6cb}\label{class_publish_queue_spi_flash_r_k_a13fc6db6a92789acb01f9eac143ca6cb} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!statePublishWait@{statePublishWait}}
+\index{statePublishWait@{statePublishWait}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{statePublishWait()}{statePublishWait()}}
+{\footnotesize\ttfamily void Publish\+Queue\+Spi\+Flash\+RK\+::state\+Publish\+Wait (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+State handler for waiting for publish to complete. 
+
+Next state\+: state\+Wait \Hypertarget{class_publish_queue_spi_flash_r_k_a6922a70eaf3b09a1e193328ad88d08d6}\label{class_publish_queue_spi_flash_r_k_a6922a70eaf3b09a1e193328ad88d08d6} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!stateWait@{stateWait}}
+\index{stateWait@{stateWait}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{stateWait()}{stateWait()}}
+{\footnotesize\ttfamily void Publish\+Queue\+Spi\+Flash\+RK\+::state\+Wait (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+State handler for waiting to publish. 
+
+state\+Time and duration\+Ms determine whether to stay in this state waiting, or whether to publish and go into state\+Publish\+Wait.
+
+Next state\+: state\+Publish\+Wait or state\+Connect\+Wait \Hypertarget{class_publish_queue_spi_flash_r_k_a7dc639a58e593645dfa9403aa6cfbbc5}\label{class_publish_queue_spi_flash_r_k_a7dc639a58e593645dfa9403aa6cfbbc5} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!tryLock@{tryLock}}
+\index{tryLock@{tryLock}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{tryLock()}{tryLock()}}
+{\footnotesize\ttfamily bool Publish\+Queue\+Spi\+Flash\+RK\+::try\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Attempts to lock the mutex that protects shared resources. 
+
+\begin{DoxyReturn}{Returns}
+true if the mutex was locked or false if it was busy already. 
+\end{DoxyReturn}
+\Hypertarget{class_publish_queue_spi_flash_r_k_ae634e2686cc1bf177ae55ebc627ac592}\label{class_publish_queue_spi_flash_r_k_ae634e2686cc1bf177ae55ebc627ac592} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!withPublishCompleteUserCallback@{withPublishCompleteUserCallback}}
+\index{withPublishCompleteUserCallback@{withPublishCompleteUserCallback}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{withPublishCompleteUserCallback()}{withPublishCompleteUserCallback()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \& Publish\+Queue\+Spi\+Flash\+RK\+::with\+Publish\+Complete\+User\+Callback (\begin{DoxyParamCaption}\item[{std\+::function$<$ void(bool succeeded, const char \texorpdfstring{$\ast$}{*}event\+Name, const char \texorpdfstring{$\ast$}{*}event\+Data)$>$}]{cb }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a callback function to call with publish is complete. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cb} & Callback function or C++ lambda. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Publish\+Queue\+Posix\&
+\end{DoxyReturn}
+The callback has this prototype and can be a function or a C++11 lambda, which allows the callback to be a class method.
+
+void callback(bool succeeded, const char \texorpdfstring{$\ast$}{*}event\+Name, const char \texorpdfstring{$\ast$}{*}event\+Data)
+
+The parameters are\+:
+\begin{DoxyItemize}
+\item succeeded\+: true if the publish succeeded or false if faled
+\item event\+Name\+: The original event name that was published (a copy of it, not the original pointer)
+\item event\+Data\+: The original event data
+\end{DoxyItemize}
+
+Note that this callback will be called from the background thread used for publishing. You should not perform any lengthy operations and you should avoid using large amounts of stack space during this callback. \Hypertarget{class_publish_queue_spi_flash_r_k_ae2a23fcaed89654f9c9f17adfdddb4bd}\label{class_publish_queue_spi_flash_r_k_ae2a23fcaed89654f9c9f17adfdddb4bd} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!withSpiFlash@{withSpiFlash}}
+\index{withSpiFlash@{withSpiFlash}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{withSpiFlash()}{withSpiFlash()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \& Publish\+Queue\+Spi\+Flash\+RK\+::with\+Spi\+Flash (\begin{DoxyParamCaption}\item[{Spi\+Flash \texorpdfstring{$\ast$}{*}}]{spi\+Flash,  }\item[{size\+\_\+t}]{addr\+Start,  }\item[{size\+\_\+t}]{addr\+End }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em spi\+Flash} & The Spi\+Flash\+RK object for the SPI NOR flash chip. \\
+\hline
+{\em addr\+Start} & Address to start at (typically 0). Must be sector aligned (multiple of 4096 bytes). \\
+\hline
+{\em addr\+End} & Address to end at (not inclusive). Must be sector aligned (multiple of 4096 bytes). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}\& 
+\end{DoxyReturn}
+
+
+\doxysubsection{Field Documentation}
+\Hypertarget{class_publish_queue_spi_flash_r_k_aa1882834270be9a7d25f4524618dc6ea}\label{class_publish_queue_spi_flash_r_k_aa1882834270be9a7d25f4524618dc6ea} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!\_instance@{\_instance}}
+\index{\_instance@{\_instance}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{\_instance}{\_instance}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_publish_queue_spi_flash_r_k}{Publish\+Queue\+Spi\+Flash\+RK}} \texorpdfstring{$\ast$}{*} Publish\+Queue\+Spi\+Flash\+RK\+::\+\_\+instance\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+Singleton instance of this class. 
+
+The object pointer to this class is stored here. It\textquotesingle{}s NULL at system boot. \Hypertarget{class_publish_queue_spi_flash_r_k_a0d16202be4f2089df5ad4b256824360b}\label{class_publish_queue_spi_flash_r_k_a0d16202be4f2089df5ad4b256824360b} 
+\index{PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}!mutex@{mutex}}
+\index{mutex@{mutex}!PublishQueueSpiFlashRK@{PublishQueueSpiFlashRK}}
+\doxysubsubsection{\texorpdfstring{mutex}{mutex}}
+{\footnotesize\ttfamily os\+\_\+mutex\+\_\+recursive\+\_\+t Publish\+Queue\+Spi\+Flash\+RK\+::mutex = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Mutex to protect shared resources. 
+
+This is initialized in \doxylink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup()} so make sure you call the \doxylink{class_publish_queue_spi_flash_r_k_a70e5c4ec556be575b3cba06af692dbf3}{setup()} method from the global application setup. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Publish\+Queue\+Spi\+Flash\+RK.\+h\item 
+src/Publish\+Queue\+Spi\+Flash\+RK.\+cpp\end{DoxyCompactItemize}
